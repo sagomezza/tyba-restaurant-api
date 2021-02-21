@@ -1,12 +1,19 @@
 //Simple express configuration
 const express = require('express');
+const session = require('express-session');
+const passport = require('passport');
+const flash = require('connect-flash');
+
+require("./config/passport")(passport)
+
+
 const app = express();
 
 //Import mongo client
 const mongoInitializer = require('./mongo/client')
 //Initialize connection to mongo
 mongoInitializer.connectToServer((err) => {
-  if(err) console.log(err)
+  if (err) console.log(err)
 })
 
 //Creating basic HTTP server 
@@ -27,6 +34,24 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
+//Session configuration
+app.use(session({
+  secret: 'secret',
+  resave: true,
+  saveUninitialized: true
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use(flash());
+app.use((req,res,next)=> {
+  res.locals.success = req.flash('success');
+  res.locals.err_msn = req.flash('err_msn');
+  res.locals.err  = req.flash('err');
+next();
+})
+
 //Allow CORS (For web applications if needed)
 app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Credentials', true);
@@ -39,6 +64,7 @@ app.use(function (req, res, next) {
 
 //API calls listing
 const userCrud = require('./users/crud')
+const search = require('./search')
 
 app.post('/user', (req, res) => {
   userCrud.createUser(req.body).then((result) => {
@@ -47,7 +73,7 @@ app.post('/user', (req, res) => {
     })
   }).catch((err) => {
     console.log(err)
-    if(err.response === -2) res.status(500).send({
+    if (err.response === -2) res.status(500).send({
       err
     })
     else res.status(422).send({
@@ -63,12 +89,56 @@ app.get('/user', (req, res) => {
     })
   }).catch((err) => {
     console.log(err)
-    if(err.response === -2) res.status(500).send({
+    if (err.response === -2) res.status(500).send({
       err
     })
     else res.status(422).send({
       err
     })
+  })
+})
+
+app.get('/search', (req, res) => {
+  search.findRestaurant(req.headers).then((result) => {
+    res.send({
+      result
+    })
+  }).catch((err) => {
+    console.log(err)
+    if (err.response === -2) res.status(500).send({
+      err
+    })
+    else res.status(422).send({
+      err
+    })
+  })
+})
+
+app.get('/historial', (req, res) => {
+  search.listHistorial(req.headers).then((result) => {
+    res.send({
+      result
+    })
+  }).catch((err) => {
+    console.log(err)
+    if (err.response === -2) res.status(500).send({
+      err
+    })
+    else res.status(422).send({
+      err
+    })
+  })
+})
+
+app.post('/login', passport.authenticate('local', { 
+  failureFlash: true,
+  successFlash: true  
+}))
+
+app.get('/logout', (req, res, next) => {
+  req.logout();
+  res.send({
+    message: "logout"
   })
 })
 
