@@ -32,3 +32,4 @@ URL: http://localhost:3000/
 ## To Do:
 - Encrypt password when storing it
 - Compare stored password with sent password through encription method in login
+- Check session for restricting search
