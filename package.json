@@ -1,0 +1,28 @@
+{
+  "name": "tyba-restaurant-api",
+  "version": "1.0.0",
+  "description": "This is re repository containing the restaurant API for Tyba tech test",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node api/server.js"
+  },
+  "author": "Santiago Gómez Zabala",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  },
+  "dependencies": {
+    "axios": "^0.21.1",
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongodb": "^3.6.0",
+    "npm": "7.5.2"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "*.json"
+    ]
+  }
+}
