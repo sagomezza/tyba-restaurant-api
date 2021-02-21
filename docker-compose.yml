@@ -1,0 +1,27 @@
+version: '3'
+services: 
+  mongo:
+    image: mongo:4.2
+    container_name: mongo
+    restart: unless-stopped
+    ports: 
+      - "27017:27017"
+    healthcheck:
+        test: ["CMD", "curl", "-f", "localhost:27017"]
+        interval: 30s
+        timeout: 10s
+        retries: 5
+  api: 
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+    depends_on:
+      - mongo
+    links: 
+      - mongo
+    volumes:
+      - ./api:/var/www/tyba/api
+    env_file: .env
+    restart: on-failure
