@@ -72,7 +72,6 @@ app.post('/user', (req, res) => {
       result
     })
   }).catch((err) => {
-    console.log(err)
     if (err.response === -2) res.status(500).send({
       err
     })
@@ -88,7 +87,6 @@ app.get('/user', (req, res) => {
       result
     })
   }).catch((err) => {
-    console.log(err)
     if (err.response === -2) res.status(500).send({
       err
     })
@@ -104,7 +102,6 @@ app.get('/search', (req, res) => {
       result
     })
   }).catch((err) => {
-    console.log(err)
     if (err.response === -2) res.status(500).send({
       err
     })
@@ -120,7 +117,6 @@ app.get('/historial', (req, res) => {
       result
     })
   }).catch((err) => {
-    console.log(err)
     if (err.response === -2) res.status(500).send({
       err
     })

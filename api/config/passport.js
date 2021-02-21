@@ -21,7 +21,7 @@ module.exports = function (passport) {
 
         })
         .catch((err) => {
-          console.log(err);
+          //console.log(err);
           if (err.response === -2) return done(null, false, { message: 'Something bad happened' });
           else return done(null, false, { message: 'There is no user with that email' });
         })

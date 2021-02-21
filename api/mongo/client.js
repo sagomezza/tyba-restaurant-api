@@ -2,7 +2,6 @@ const MongoClient = require('mongodb').MongoClient;
 const dbName = process.env.MONGO_DB_NAME
 const port = process.env.MONGO_PORT
 const url = `mongodb://${process.env.MONGO_DB}:${port}/${dbName}`
-console.log(url)
 let _db;
 
 const connectToServer = async (callback) => {

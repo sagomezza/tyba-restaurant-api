@@ -20,7 +20,7 @@ module.exports.createUser = (parameter) => {
               name: parameter.name
             }, (err, result) => {
               if (err) {
-                console.log("[createUser, mongoOperation]:", err)
+                //console.log("[createUser, mongoOperation]:", err)
                 reject({ response: -2, message: `Something bad happened` })
                 return
               } else {
@@ -30,7 +30,7 @@ module.exports.createUser = (parameter) => {
           } else reject(err)
         })
     } catch (err) {
-      console.log("[createUser]:", err)
+      //console.log("[createUser]:", err)
       reject({ response: -2, message: `Something bad happened` })
     }
   })
@@ -46,7 +46,7 @@ module.exports.readUser = (parameter) => {
         email: parameter.email
       }, {password: 0 }).toArray((err, result) => {
         if (err) {
-          console.log("[readUser, mongoOperation]:", err)
+          //console.log("[readUser, mongoOperation]:", err)
           reject({ response: -2, message: `Something bad happened` })
           return
         } else if (result.length === 0) {
@@ -58,7 +58,7 @@ module.exports.readUser = (parameter) => {
         }
       })
     } catch (err) {
-      console.log("[readUser]:", err)
+      //console.log("[readUser]:", err)
       reject({ response: -2, message: `Something bad happened` })
     }
   })

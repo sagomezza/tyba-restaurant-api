@@ -16,7 +16,6 @@ module.exports.findRestaurant = (parameter) => {
           parameter.location = { latitude: geocodeRes.data.data[0].latitude, longitude: geocodeRes.data.data[0].longitude }
           searchRestaurants(parameter)
             .then(res => {
-              console.log("5")
               resolve(res)
               return;
             })
@@ -32,7 +31,6 @@ module.exports.findRestaurant = (parameter) => {
 
 searchRestaurants = (parameter) => {
   return new Promise((resolve, reject) => {
-    console.log("1")
     const params = {
       location: `${parameter.location.latitude},${parameter.location.longitude}`,
       radius: 1500,
@@ -40,7 +38,6 @@ searchRestaurants = (parameter) => {
       keyword: 'cruise',
       key: process.env.GOOGLE_KEY
     }
-    console.log("2")
     axios.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json', { params })
       .then(searchRes => {
         historial(parameter)
@@ -50,7 +47,7 @@ searchRestaurants = (parameter) => {
           .catch(err => reject(err))
       })
       .catch(err => {
-        console.log(err)
+        // console.log(err)
         reject(err)
       })
   })
@@ -65,7 +62,7 @@ historial = (parameter) => {
       date: new Date()
     }, (err, result) => {
       if (err) {
-        console.log("[historial, mongoOperation]:", err)
+        // console.log("[historial, mongoOperation]:", err)
         reject({ response: -2, message: `Something bad happened` })
         return
       } else {
@@ -84,7 +81,7 @@ module.exports.listHistorial = (parameter) => {
         email: parameter.email
       }, { password: 0 }).toArray((err, result) => {
         if (err) {
-          console.log("[listHistorial, mongoOperation]:", err)
+          // console.log("[listHistorial, mongoOperation]:", err)
           reject({ response: -2, message: `Something bad happened` })
           return
         } else if (result.length === 0) {
@@ -95,7 +92,7 @@ module.exports.listHistorial = (parameter) => {
         }
       })
     } catch (err) {
-      console.log("[listHistorial]:", err)
+      // console.log("[listHistorial]:", err)
       reject({ response: -2, message: `Something bad happened` })
     }
   })
