@@ -1,6 +1,5 @@
 const mongoStarter = require('../mongo/client')
 
-
 module.exports.createUser = (parameter) => {
   return new Promise((resolve, reject) => {
     try {
@@ -54,7 +53,7 @@ module.exports.readUser = (parameter) => {
           reject({ response: -3, message: `There is no user with email ${parameter.email}` })
           return
         } else {
-          delete result[0].password
+          if(!parameter.login) delete result[0].password
           resolve({ response: 1, message: `User found`, data: result[0] })
         }
       })
