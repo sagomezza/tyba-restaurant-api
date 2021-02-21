@@ -28,3 +28,7 @@ URL: http://localhost:3000/
 ### POST
 - /user: Store new user data
 - /login: Logins an existing user
+
+## To Do:
+- Encrypt password when storing it
+- Compare through encription in login
