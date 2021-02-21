@@ -126,10 +126,11 @@ app.get('/historial', (req, res) => {
   })
 })
 
-app.post('/login', passport.authenticate('local', { 
-  failureFlash: true,
-  successFlash: true  
-}))
+app.post('/login', passport.authenticate('local'), (req, res, next) => {
+  res.send({
+    message: "Login"
+  })
+})
 
 app.get('/logout', (req, res, next) => {
   req.logout();
