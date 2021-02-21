@@ -1,24 +1,24 @@
 # tyba-restaurant-api
 Simple API Rest for consulting restaurants near a place.
 
-##Requirements:
+## Requirements:
 Docker
 docker-compose
 
-##Usage:
+## Usage:
 First time: docker-compose up --build -d
 
 
-##API CALLS:
+## API CALLS:
 This is a simple list of existing API calls.
 URL: http://localhost:3000/
 
-###GET 
+### GET 
 /user: Returns existing user's data
 /search: Search restaurants near the given place
 /historial: Returns the search historial for an user
 /logout: Logout the user
 
-###POST
+### POST
 /user: Store new user data
 /login: Logins an existing user
