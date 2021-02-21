@@ -1,17 +1,19 @@
-var express = require('express');
-var app = express();
+//Simple express configuration
+const express = require('express');
+const app = express();
 
-
-var mongoInitializer = require('./mongo/client')
+//Import mongo client
+const mongoInitializer = require('./mongo/client')
+//Initialize connection to mongo
 mongoInitializer.connectToServer((err) => {
   if(err) console.log(err)
 })
 
-var server = require('http').createServer(app);
+//Creating basic HTTP server 
+const server = require('http').createServer(app);
 
-
+//Configuration of the body-parser for request (API calls)
 const bodyParser = require('body-parser');
-
 
 app.use(bodyParser.json({
   limit: "50mb"
@@ -25,8 +27,7 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-
-//Allow CORS
+//Allow CORS (For web applications if needed)
 app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Credentials', true);
   res.header('Access-Control-Allow-Origin', req.headers.origin);
@@ -36,6 +37,40 @@ app.use(function (req, res, next) {
   next();
 });
 
+//API calls listing
+const userCrud = require('./users/crud')
+
+app.post('/user', (req, res) => {
+  userCrud.createUser(req.body).then((result) => {
+    res.send({
+      result
+    })
+  }).catch((err) => {
+    console.log(err)
+    if(err.response === -2) res.status(500).send({
+      err
+    })
+    else res.status(422).send({
+      err
+    })
+  })
+})
+
+app.get('/user', (req, res) => {
+  userCrud.readUser(req.headers).then((result) => {
+    res.send({
+      result
+    })
+  }).catch((err) => {
+    console.log(err)
+    if(err.response === -2) res.status(500).send({
+      err
+    })
+    else res.status(422).send({
+      err
+    })
+  })
+})
 
 server.listen(3000, () => {
   console.log('Started on port 3000');
